@@ -1,0 +1,220 @@
+// WebVoip.idl : IDL source for WebVoip
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (WebVoip.tlb) and marshalling code.
+
+#include "olectl.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(1232ED03-8604-4F60-A6CB-B46FD2F04D71),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IWebVoipCtrl : IDispatch{
+	[id(1), helpstring("方法:初始化控件")] HRESULT WebVoipInitialize(void);
+	[id(2), helpstring("控件注销")] HRESULT WebVoipUninitialize(void);
+	[id(3), helpstring("登陆注册")] HRESULT WebVoipLogin(void);
+	[id(4), helpstring("注销")] HRESULT WebVoipLogout(void);
+	[id(5), helpstring("发起普通呼叫")] HRESULT WebVoipCall([in] BSTR phoneNum, [in] USHORT callType, [out, retval] SHORT* ret);
+	[id(6), helpstring("关闭呼叫")] HRESULT WebVoipHangup([out, retval] SHORT* ret);
+	[id(7), helpstring("本端振铃通知")] HRESULT WebVoipCallRingAlert([out, retval] SHORT* ret);
+	[id(8), helpstring("来电接听")] HRESULT WebVoipAccept([in] USHORT callMode, [out, retval] SHORT* ret);
+	[id(9), helpstring("来电拒接")] HRESULT WebVoipReject([out, retval] SHORT* ret);
+	[id(10), helpstring("在语音呼叫中增加视频请求，或者在视频呼叫中移除视频请求。")] HRESULT WebVoipIsEnableVideo([in] VARIANT_BOOL isEnable, [out,retval] SHORT* ret);
+	[id(11), helpstring("响应呼叫中音频转视频请求")] HRESULT WebVoipEnableVideoReply([in] VARIANT_BOOL isAccept, [out,retval] SHORT* ret);
+	[id(12), helpstring("响应呼叫中视频转音频请求")] HRESULT WebVoipDisableVideoReply([in] VARIANT_BOOL isAccept, [out,retval] SHORT* ret);
+	[id(13), helpstring("设置视频窗口")] HRESULT WebVoipSetLocalVideoWindow([in] unsigned long wndhandle, [in] unsigned short wndType, [in] unsigned long pos_x, [in] unsigned long pos_y, [in] unsigned long pos_w, [in] unsigned long pos_h, [out, retval] SHORT* ret);
+	[id(14), helpstring("二次拨号")] HRESULT WebVoipDMTFSecondDial([in] BSTR strKey, [out,retval] SHORT* ret);
+	[id(15), helpstring("保持/取消保持当前呼叫")] HRESULT WebVoipCallHold([in] VARIANT_BOOL isHold, [out,retval] SHORT* ret);
+	[id(16), helpstring("发起呼叫盲传请求")] HRESULT WebVoipCallBlindTransfer([in] BSTR transToNum, [out,retval] SHORT* ret);
+	[id(17), helpstring("呼叫转移(咨询转)")] HRESULT WebVoipCallConsultTransfer([out,retval] SHORT* ret);
+	[id(18), helpstring("呼叫转移(偏转)")] HRESULT WebVoipCallDivertTransfer([in] BSTR divertToNum, [out,retval] SHORT* ret);
+	[id(19), helpstring("呼叫前转设置")] HRESULT WebVoipSetCallForward([in] unsigned int service, [in] BSTR transToNum, [out,retval] SHORT* ret);
+	[id(20), helpstring("呼叫免打扰设置")] HRESULT WebVoipSetCallDND([in] unsigned int service, [out,retval] SHORT* ret);
+	[id(21), helpstring("呼叫自动回呼设置")] HRESULT WebVoipSetCallACB([in] unsigned int service, [out,retval] SHORT* ret);
+	[id(22), helpstring("设置媒体静音")] HRESULT WebVoipSetMediaMute([in] unsigned short media, [in] VARIANT_BOOL isMute, [out,retval] SHORT* ret);
+	[id(23), helpstring("设置当前媒体音量")] HRESULT WebVoipSetCurrMediaVolume([in] unsigned short media, unsigned int volume, [out,retval] SHORT* ret);
+	[id(24), helpstring("获取当前媒体音量")] HRESULT WebVoipGetCurrMediaVolume([in] unsigned short media, [out,retval] unsigned int* volume);
+	[id(25), helpstring("设置媒体设备")] HRESULT WebVoipSetMediaDevice([in] unsigned short media, [in] unsigned int index, [out,retval] SHORT* ret);
+	[id(26), helpstring("获取媒体设备")] HRESULT WebVoipGetMediaDevice([in] unsigned short media, [in,out] unsigned int* count, [out,retval] BSTR* deviceInfo);
+	[id(27), helpstring("改变用户电话状态")] HRESULT WebVoipChangeUserPhoneStatus([in] unsigned short sip_status, SHORT* ret);
+	[id(28), helpstring("通话录音")] HRESULT WebVoipAudioRecord([in] VARIANT_BOOL isOnRecord, [out,retval] SHORT* ret);
+	[id(29), helpstring("联动设置")] HRESULT WebVoipJointSetting([in] BSTR linkage_number, [out,retval] SHORT* ret);
+	[id(30), helpstring("话机联动")] HRESULT WebVoipPhoneJoint([in] VARIANT_BOOL isJoint, [out,retval] SHORT* ret);
+	[id(31), helpstring("联动语音切换")] HRESULT WebVoipJointSwitch([out,retval] SHORT* ret);
+	[id(32), helpstring("获取错误码信息")] HRESULT WebVoipGetLastError([in] unsigned int errornum, [out,retval] BSTR* errDesc);
+	[propget, id(33), helpstring("登录注册结果")] HRESULT VoipLoginResultEvent([out, retval] VARIANT* pVal);
+	[propput, id(33), helpstring("登录注册结果")] HRESULT VoipLoginResultEvent([in] VARIANT newVal);
+	[propget, id(34), helpstring("登出注销结果")] HRESULT VoipLogoutResultEvent([out, retval] VARIANT* pVal);
+	[propput, id(34), helpstring("登出注销结果")] HRESULT VoipLogoutResultEvent([in] VARIANT newVal);
+	[propget, id(35), helpstring("呼叫已发出")] HRESULT VoipCallOutgoingEvent([out, retval] VARIANT* pVal);
+	[propput, id(35), helpstring("呼叫已发出")] HRESULT VoipCallOutgoingEvent([in] VARIANT newVal);
+	[propget, id(36), helpstring("对方振铃")] HRESULT VoipPeerRingbackEvent([out, retval] VARIANT* pVal);
+	[propput, id(36), helpstring("对方振铃")] HRESULT VoipPeerRingbackEvent([in] VARIANT newVal);
+	[propget, id(37), helpstring("RTP通道建立")] HRESULT VoipRtpCreatedEvent([out, retval] VARIANT* pVal);
+	[propput, id(37), helpstring("RTP通道建立")] HRESULT VoipRtpCreatedEvent([in] VARIANT newVal);
+	[propget, id(38), helpstring("来电通知")] HRESULT VoipIncomingCallEvent([out, retval] VARIANT* pVal);
+	[propput, id(38), helpstring("来电通知")] HRESULT VoipIncomingCallEvent([in] VARIANT newVal);
+	[propget, id(39), helpstring("开始通话")] HRESULT VoipStartTalkingEvent([out, retval] VARIANT* pVal);
+	[propput, id(39), helpstring("开始通话")] HRESULT VoipStartTalkingEvent([in] VARIANT newVal);
+	[propget, id(40), helpstring("关闭呼叫结果")] HRESULT VoipCallCloseResultEvent([out, retval] VARIANT* pVal);
+	[propput, id(40), helpstring("关闭呼叫结果")] HRESULT VoipCallCloseResultEvent([in] VARIANT newVal);
+	[propget, id(41), helpstring("音视频转换结果")] HRESULT VoipVoiceVideoSwitchResultEvent([out, retval] VARIANT* pVal);
+	[propput, id(41), helpstring("音视频转换结果")] HRESULT VoipVoiceVideoSwitchResultEvent([in] VARIANT newVal);
+	[propget, id(42), helpstring("语音转换视频请求通知")] HRESULT VoipNotifyVoiceSwitchToVideoReqEvent([out, retval] VARIANT* pVal);
+	[propput, id(42), helpstring("语音转换视频请求通知")] HRESULT VoipNotifyVoiceSwitchToVideoReqEvent([in] VARIANT newVal);
+	[propget, id(43), helpstring("视频转换语音请求通知")] HRESULT VoipNotifyVideoSwitchToVoiceReqEvent([out, retval] VARIANT* pVal);
+	[propput, id(43), helpstring("视频转换语音请求通知")] HRESULT VoipNotifyVideoSwitchToVoiceReqEvent([in] VARIANT newVal);
+	[propget, id(44), helpstring("保持成功")] HRESULT VoipCallHoldSuccessEvent([out, retval] VARIANT* pVal);
+	[propput, id(44), helpstring("保持成功")] HRESULT VoipCallHoldSuccessEvent([in] VARIANT newVal);
+	[propget, id(45), helpstring("保持失败")] HRESULT VoipCallHoldFailedEvent([out, retval] VARIANT* pVal);
+	[propput, id(45), helpstring("保持失败")] HRESULT VoipCallHoldFailedEvent([in] VARIANT newVal);
+	[propget, id(46), helpstring("取消保持成功")] HRESULT VoipCallUnHoldSuccessEvent([out, retval] VARIANT* pVal);
+	[propput, id(46), helpstring("取消保持成功")] HRESULT VoipCallUnHoldSuccessEvent([in] VARIANT newVal);
+	[propget, id(47), helpstring("取消保持失败")] HRESULT VoipCallUnHoldFailedEvent([out, retval] VARIANT* pVal);
+	[propput, id(47), helpstring("取消保持失败")] HRESULT VoipCallUnHoldFailedEvent([in] VARIANT newVal);
+	[propget, id(48), helpstring("呼叫盲转成功")] HRESULT VoipCallBlindTransSuccessEvent([out, retval] VARIANT* pVal);
+	[propput, id(48), helpstring("呼叫盲转成功")] HRESULT VoipCallBlindTransSuccessEvent([in] VARIANT newVal);
+	[propget, id(49), helpstring("呼叫盲转失败")] HRESULT VoipCallBlindTransFailedEvent([out, retval] VARIANT* pVal);
+	[propput, id(49), helpstring("呼叫盲转失败")] HRESULT VoipCallBlindTransFailedEvent([in] VARIANT newVal);
+	[propget, id(50), helpstring("呼叫咨询转成功")] HRESULT VoipCallConsultTransSuccessEvent([out, retval] VARIANT* pVal);
+	[propput, id(50), helpstring("呼叫咨询转成功")] HRESULT VoipCallConsultTransSuccessEvent([in] VARIANT newVal);
+	[propget, id(51), helpstring("呼叫咨询转失败")] HRESULT VoipCallConsultTransFailedEvent([out, retval] VARIANT* pVal);
+	[propput, id(51), helpstring("呼叫咨询转失败")] HRESULT VoipCallConsultTransFailedEvent([in] VARIANT newVal);
+	[propget, id(52), helpstring("IPT服务登记成功")] HRESULT VoipIPTServiceRegSuccessEvent([out, retval] VARIANT* pVal);
+	[propput, id(52), helpstring("IPT服务登记成功")] HRESULT VoipIPTServiceRegSuccessEvent([in] VARIANT newVal);
+	[propget, id(53), helpstring("IPT服务登记失败")] HRESULT VoipIPTServiceRegFailedEvent([out, retval] VARIANT* pVal);
+	[propput, id(53), helpstring("IPT服务登记失败")] HRESULT VoipIPTServiceRegFailedEvent([in] VARIANT newVal);
+	[propget, id(54), helpstring("电话状态变化通知")] HRESULT VoipPhoneStatusChangeEvent([out, retval] VARIANT* pVal);
+	[propput, id(54), helpstring("电话状态变化通知")] HRESULT VoipPhoneStatusChangeEvent([in] VARIANT newVal);
+	[propget, id(55), helpstring("开始录音")] HRESULT VoipStartRecordingEvent([out, retval] VARIANT* pVal);
+	[propput, id(55), helpstring("开始录音")] HRESULT VoipStartRecordingEvent([in] VARIANT newVal);
+	[propget, id(56), helpstring("启动录音失败")] HRESULT VoipRecordFailedEvent([out, retval] VARIANT* pVal);
+	[propput, id(56), helpstring("启动录音失败")] HRESULT VoipRecordFailedEvent([in] VARIANT newVal);
+	[propget, id(57), helpstring("停止录音成功")] HRESULT VoipUnRecordSuccessEvent([out, retval] VARIANT* pVal);
+	[propput, id(57), helpstring("停止录音成功")] HRESULT VoipUnRecordSuccessEvent([in] VARIANT newVal);
+	[propget, id(58), helpstring("停止录音失败")] HRESULT VoipUnRecordFailedEvent([out, retval] VARIANT* pVal);
+	[propput, id(58), helpstring("停止录音失败")] HRESULT VoipUnRecordFailedEvent([in] VARIANT newVal);
+	[propget, id(59), helpstring("联动开启结果")] HRESULT VoipJointStartResultEvent([out, retval] VARIANT* pVal);
+	[propput, id(59), helpstring("联动开启结果")] HRESULT VoipJointStartResultEvent([in] VARIANT newVal);
+	[propget, id(60), helpstring("联动关闭结果")] HRESULT VoipJointStopResultEvent([out, retval] VARIANT* pVal);
+	[propput, id(60), helpstring("联动关闭结果")] HRESULT VoipJointStopResultEvent([in] VARIANT newVal);
+	[propget, id(61), helpstring("联动语音切换至话机通知")] HRESULT VoipNotifyJointSwitchToPhoneEvent([out, retval] VARIANT* pVal);
+	[propput, id(61), helpstring("联动语音切换至话机通知")] HRESULT VoipNotifyJointSwitchToPhoneEvent([in] VARIANT newVal);
+	[propget, id(62), helpstring("联动语音切换至PC通知")] HRESULT VoipNotifyJointSwitchToPCEvent([out, retval] VARIANT* pVal);
+	[propput, id(62), helpstring("联动语音切换至PC通知")] HRESULT VoipNotifyJointSwitchToPCEvent([in] VARIANT newVal);
+	[propget, id(63), helpstring("SIP服务器IP地址或域名")] HRESULT VoipSIPServerIP([out, retval] VARIANT* pVal);
+	[propput, id(63), helpstring("SIP服务器IP地址或域名")] HRESULT VoipSIPServerIP([in] VARIANT newVal);
+	[propget, id(64), helpstring("SIP服务器端口号")] HRESULT VoipSIPServerPort([out, retval] VARIANT* pVal);
+	[propput, id(64), helpstring("SIP服务器端口号")] HRESULT VoipSIPServerPort([in] VARIANT newVal);
+	[propget, id(65), helpstring("呼叫唯一标识")] HRESULT VoipCallInfo_Id([out, retval] VARIANT* pVal);
+	[propput, id(65), helpstring("呼叫唯一标识")] HRESULT VoipCallInfo_Id([in] VARIANT newVal);
+	[propget, id(66), helpstring("呼叫类型")] HRESULT VoipCallInfo_Type([out, retval] VARIANT* pVal);
+	[propput, id(66), helpstring("呼叫类型")] HRESULT VoipCallInfo_Type([in] VARIANT newVal);
+	[propget, id(67), helpstring("主叫呼叫状态")] HRESULT VoipCallInfo_CallerStatus([out, retval] VARIANT* pVal);
+	[propput, id(67), helpstring("主叫呼叫状态")] HRESULT VoipCallInfo_CallerStatus([in] VARIANT newVal);
+	[propget, id(68), helpstring("被叫呼叫状态")] HRESULT VoipCallInfo_CalleeStatus([out, retval] VARIANT* pVal);
+	[propput, id(68), helpstring("被叫呼叫状态")] HRESULT VoipCallInfo_CalleeStatus([in] VARIANT newVal);
+	[propget, id(69), helpstring("主叫号码")] HRESULT VoipCallInfo_CallerNum([out, retval] VARIANT* pVal);
+	[propput, id(69), helpstring("主叫号码")] HRESULT VoipCallInfo_CallerNum([in] VARIANT newVal);
+	[propget, id(70), helpstring("被叫号码")] HRESULT VoipCallInfo_CalleeNum([out, retval] VARIANT* pVal);
+	[propput, id(70), helpstring("被叫号码")] HRESULT VoipCallInfo_CalleeNum([in] VARIANT newVal);
+	[propget, id(71), helpstring("原始被叫号码")] HRESULT VoipCallInfo_OrgCalleeNum([out, retval] VARIANT* pVal);
+	[propput, id(71), helpstring("原始被叫号码")] HRESULT VoipCallInfo_OrgCalleeNum([in] VARIANT newVal);
+	[propget, id(72), helpstring("线路ID，共享线功能时使用")] HRESULT VoipCallInfo_LineId([out, retval] VARIANT* pVal);
+	[propput, id(72), helpstring("线路ID，共享线功能时使用")] HRESULT VoipCallInfo_LineId([in] VARIANT newVal);
+	[propget, id(73), helpstring("呼叫线路类型")] HRESULT VoipCallInfo_LineType([out, retval] VARIANT* pVal);
+	[propput, id(73), helpstring("呼叫线路类型")] HRESULT VoipCallInfo_LineType([in] VARIANT newVal);
+	[propget, id(74), helpstring("呼叫模式")] HRESULT VoipCallMode([out, retval] VARIANT* pVal);
+	[propput, id(74), helpstring("呼叫模式")] HRESULT VoipCallMode([in] VARIANT newVal);
+	[propget, id(75), helpstring("媒体设备类型")] HRESULT MediaType([out, retval] VARIANT* pVal);
+	[propput, id(75), helpstring("媒体设备类型")] HRESULT MediaType([in] VARIANT newVal);
+	[propget, id(76), helpstring("SIP帐号ID")] HRESULT VoipUserInfo_Id([out, retval] VARIANT* pVal);
+	[propput, id(76), helpstring("SIP帐号ID")] HRESULT VoipUserInfo_Id([in] VARIANT newVal);
+	[propget, id(77), helpstring("SIP帐号用户名")] HRESULT VoipUserInfo_UserName([out, retval] VARIANT* pVal);
+	[propput, id(77), helpstring("SIP帐号用户名")] HRESULT VoipUserInfo_UserName([in] VARIANT newVal);
+	[propget, id(78), helpstring("SIP帐号密码")] HRESULT VoipUserInfo_Password([out, retval] VARIANT* pVal);
+	[propput, id(78), helpstring("SIP帐号密码")] HRESULT VoipUserInfo_Password([in] VARIANT newVal);
+	[propget, id(79), helpstring("SIP账户号码（本地号码）")] HRESULT VoipUserInfo_AccNum([out, retval] VARIANT* pVal);
+	[propput, id(79), helpstring("SIP账户号码（本地号码）")] HRESULT VoipUserInfo_AccNum([in] VARIANT newVal);
+	[propget, id(80), helpstring("SIP帐号状态")] HRESULT VoipUserInfo_AccStatus([out, retval] VARIANT* pVal);
+	[propput, id(80), helpstring("SIP帐号状态")] HRESULT VoipUserInfo_AccStatus([in] VARIANT newVal);
+	[propget, id(81), helpstring("用户SIP电话状态")] HRESULT VoipUserInfo_SipStatus([out, retval] VARIANT* pVal);
+	[propput, id(81), helpstring("用户SIP电话状态")] HRESULT VoipUserInfo_SipStatus([in] VARIANT newVal);
+};
+
+[
+	uuid(DE63FD76-C0F4-4F84-9CFD-637972E1100A),
+	version(1.0),
+]
+library WebVoipLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(B4D14A83-64FF-47DA-B87C-5A427B2FA4F4)		
+	]
+	dispinterface _IWebVoipCtrlEvents
+	{
+		properties:
+		methods:
+	};
+	[
+		uuid(25DEB499-D532-48E2-9704-4DBB71115A31),		
+		control
+	]
+	coclass WebVoipCtrl
+	{
+		[default] interface IWebVoipCtrl;
+		[default, source] dispinterface _IWebVoipCtrlEvents;
+	};
+
+	typedef enum WebVoipCallType
+	{
+		AudioCall = 0,	//语音呼叫
+		VideoCall,		//视频呼叫
+	}WebVoipCallType;//呼叫类型
+
+	typedef enum WebVoipCallMode
+	{
+		SoftCall = 0,	//软终端呼叫
+		IPPhoneCall,	//IPPhonr呼叫
+	}WebVoipCallMode;//呼叫模式
+
+	typedef enum WebVoipForwardService
+	{
+		FORWARD_UNCONDITION_Active = 0,	//设置无条件前传
+		FORWARD_UNCONDITION_Deactive,	//取消无条件前传
+		FORWARD_ONBUSY_Active,			//设置遇忙前传
+		FORWARD_ONBUSY_Deactive,		//取消遇忙前传
+		FORWARD_NOREPLY_Active,			//设置无应答前传
+		FORWARD_NOREPLY_Deactive,		//取消无应答前传
+		FORWARD_OFFLINE_Active,			//设置离线前传
+		FORWARD_OFFLINE_Deactive		//取消离线前传
+	}WebVoipForwardService;//前传业务类型参数
+
+	typedef enum WebVoipDNDService
+	{
+		REG_DND = 0,	//设置免打扰
+		UNREG_DND		//取消免打扰
+	}WebVoipDNDService;
+
+	typedef enum WebVoipACBService
+	{
+		ACBCALL_ACTIVE = 0,	//设置呼叫回呼
+		ACBCALL_DEACTIVE	//取消呼叫回呼
+	}WebVoipACBService;
+
+	typedef enum WebVoipDeviceType
+	{
+		DEVICE_MIC = 0,	//麦克风
+		DEVICE_SPK,		//扬声器
+		DEVICE_VIDEO,	//视频设备
+	}WebVoipDeviceType;
+
+};
+

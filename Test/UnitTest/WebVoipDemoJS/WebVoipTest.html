@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebVoipDemo</title>
+<script type="text/javascript" src="JavaScript/jquery/jquery.js"></script>
+<script type="text/javascript" src="JavaScript/eSDKWebVoip.js"></script>
+<style type="text/css">
+.style8 {
+	height: 26px;
+	text-align: center;
+}
+.style9 {
+	height: 28px;
+	width: 136px;
+}
+.style10 {
+	height: 30px;
+	text-align: center;
+}
+.style11 {
+	height: 29px;
+	text-align: center;
+}
+.style12 {
+	font-size: medium;
+}
+.style13 {
+	font-size: 14px;
+	font-weight: bold;
+}
+.style14 {
+	font-size: 14px;
+}
+.style15 {
+	height: 26px;
+	text-align: left;
+	width: 136px;
+}
+.style16 {
+	height: 26px;
+	text-align: center;
+	width: 51px;
+}
+.style18 {
+	height: 26px;
+	text-align: center;
+	width: 99px;
+}
+.style19 {
+	height: 26px;
+	text-align: center;
+	width: 52px;
+}
+.style20 {
+	height: 21px;
+	text-align: center;
+	width: 257px;
+}
+.style21 {
+	height: 24px;
+	width: 257px;
+}
+.style22 {
+	width: 257px;
+}
+.style23 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+<body>	
+	<!-- ocx 加载 
+	<OBJECT id="WebVoipDll" classid="CLSID:25DEB499-D532-48E2-9704-4DBB71115A31"/>
+	-->
+	<div id="page"  style="position:absolute; left:0px; top: 30px; bottom: 0px; right: 0px; overflow: auto;">
+		<div>
+			<span id="VoipUserInfo_Id" style="display:inline-block; width:130px;">UserInfo_Id</span>
+			<input id="UserInfo_Id" type="text" value="11316pc">
+			<span id="VoipUserInfo_Password" style="display:inline-block; width:130px;">UserInfo_Password</span>
+			<input id="UserInfo_Password" type="text" value="">
+			<span id="VoipUserInfo_UserName" style="display:inline-block; width:130px;">UserInfo_UserName</span>
+			<input id="UserInfo_UserName" type="text" value=""> 
+			<span id="serverLbl" style="display:inline-block; width:130px;">SIPServerIP</span>
+			<input id="SIPServerIP" type="text" value="10.170.103.86"> 
+			<span id="portLbl" style="display:inline-block; width:130px;">SIPServerPort</span>
+			<input id="SIPServerPort" type="text" value="5060">
+			<br>
+			<span id="VoipCallInfo_Id" style="display:inline-block; width:130px;">CallInfo_Id</span>
+			<input id="CallInfo_Id" type="text" value="0">
+			<span id="VoipCallInfo_Type" style="display:inline-block; width:130px;">CallInfo_Type</span>
+			<input id="CallInfo_Type" type="text" value="1">
+			<span id="VoipCallInfo_CallerStatus" style="display:inline-block; width:130px;">CallInfo_CallerStatus</span>
+			<input id="CallInfo_CallerStatus" type="text" value="2"> 
+			<span id="VoipCallInfo_CalleeStatus" style="display:inline-block; width:130px;">CallInfo_CalleeStatus</span>
+			<input id="CallInfo_CalleeStatus" type="text" value="3"> 
+			<br>
+			<span id="VoipCallInfo_CallerNum" style="display:inline-block; width:130px;">CallInfo_CallerNum</span>
+			<input id="CallInfo_CallerNum" type="text" value="1111"> 
+			<span id="VoipCallInfo_CalleeNum" style="display:inline-block; width:130px;">CallInfo_CalleeNum</span>
+			<input id="CallInfo_CalleeNum" type="text" value="2222"> 
+			<span id="VoipCallInfo_OrgCalleeNum" style="display:inline-block; width:130px;">CallInfo_OrgCalleeNum</span>
+			<input id="CallInfo_OrgCalleeNum" type="text" value="3333"> 
+			<br>
+			<span id="VoipCallInfo_LineId" style="display:inline-block; width:130px;">CallInfo_LineId</span>
+			<input id="CallInfo_LineId" type="text" value=4> 
+			<span id="VoipCallInfo_LineType" style="display:inline-block; width:130px;">Info_LineType</span>
+			<input id="CallInfo_LineType" type="text" value="5">
+			<span id="VoipCallMode" style="display:inline-block; width:130px;">CallMode</span>
+			<input id="CallMode" type="text" value="6">
+			<span id="MediaType" style="display:inline-block; width:130px;">MediaType</span>
+			<input id="MediaTypeinput" type="text" value="7">
+			<br>
+			<span id="VoipUserInfo_AccNum" style="display:inline-block; width:130px;">UserInfo_AccNum</span>
+			<input id="UserInfo_AccNum" type="text" value="4444">
+			<span id="VoipUserInfo_AccStatus" style="display:inline-block; width:130px;">UserInfo_AccStatus</span>
+			<input id="UserInfo_AccStatus" type="text" value="8">
+			<span id="VoipUserInfo_SipStatus" style="display:inline-block; width:130px;">UserInfo_SipStatus</span>
+			<input id="UserInfo_SipStatus" type="text" value="9">
+		</div>
+		<div>
+			<input type="button" id="initbtn" onclick="Init()" value="初始化">
+			<input type="button" id="set" onclick="setvalue()" value="设置全部参数">
+			<input type="button" id="get" onclick="getvalue()" value="获取全部参数">
+			<input type="button" id="loginbtn" onclick="Login()" value="登录">			
+			<input type="button" id="logoutbtn" onclick="Logout()" value="注销">
+			<input type="button" id="Unitbtn" onclick="Unit()" value="去初始化">
+		</div>
+		<div id="con_one_2">
+			<span id="calleenum" style="display:inline-block; width:100px;">对方号码</span>
+			<input id="callee" type="text" value="11312">
+			<span id="incomingnum" style="display:inline-block; width:100px;">来电号码</span>
+			<input id="incomingvalue" type="text" value="">
+			<span id="remote" style="display:inline-block; width:100px;">对方视频句柄</span>
+			<input id="remotewndid" type="text" value="">
+			<span id="local" style="display:inline-block; width:100px;">本方视频句柄</span>
+			<input id="localwndid" type="text" value="">
+			<br>
+			<input type="button" id="webvoipcallbtn" onclick="WebVoipCall()" value="发起呼叫">
+			<input type="button" id="hangupbtn" onclick="HangupVoipCall()" value="挂断呼叫">
+			<input type="button" id="WebVoipCallRingAlert" onclick="WebVoipCallRingAlert()" value="本端振铃">
+			<input type="button" id="webvoipacceptbtn" onclick="AcceptVoipCall()" value="接听呼叫">			 
+			<input type="button" id="Reject" onclick="RejectVoipCall()" value="拒绝接听">
+			<input type="button" id="WebVoipDMTFSecondDial" onclick="WebVoipDMTFSecondDial()" value="二次拨号">
+			<input type="button" id="hold" onclick="WebVoipCallHold(1)" value="呼叫保持">
+			<input type="button" id="unhold" onclick="WebVoipCallHold(0)" value="取消保持">
+			<br>
+			<input type="button" id="createwnd" onclick="WebVoipSetLocalVideoWindow()" value="设置视频窗口">
+			<input type="button" id="videocallbtn“" onclick="WebVoipVideoCall()" value="发起视频呼叫">
+			<input type="button" id="addvideo“" onclick="WebVoipIsEnableVideo(1)" value="语音转视频">
+			<input type="button" id="delvideo" onclick="WebVoipIsEnableVideo(0)" value="视频转语音">
+			<br>
+			<input type="button" id="acceptaddvideo" onclick="WebVoipEnableVideoReply(1)" value="接受音频转视频">
+			<input type="button" id="rejectaddvideo" onclick="WebVoipEnableVideoReply(0)" value="拒绝音频转视频">
+			<input type="button" id="acceptdelvideo" onclick="WebVoipDisableVideoReply(1)" value="接受视频转音频">
+			<input type="button" id="rejectdelvideo" onclick="WebVoipDisableVideoReply(0)" value="拒绝视频转音频">
+		</div>
+		<div id="con_one_3">			
+			<span id="transnumid" style="display:inline-block; width:100px;">转移号码</span>
+			<input id="transnum" type="text" value="386045">
+			<br>
+			<input type="button" id="WebVoipCallBlindTransfer" onclick="WebVoipCallBlindTransfer()" value="呼叫盲转">			 
+			<input type="button" id="WebVoipCallConsultTransfer" disabled="true" onclick="WebVoipCallConsultTransfer()" value="呼叫咨询转">
+			<input type="button" id="WebVoipCallDivertTransfer" onclick="WebVoipCallDivertTransfer()" value="呼叫偏转">
+			<br>
+			<input type="button" id="WebVoipSetCallForward1" onclick="WebVoipSetCallForward(0)" value="设置无条件前传">
+			<input type="button" id="WebVoipSetCallForward2" onclick="WebVoipSetCallForward(1)" value="取消无条件前传">
+			<input type="button" id="WebVoipSetCallForward3" onclick="WebVoipSetCallForward(2)" value="设置遇忙前传">
+			<input type="button" id="WebVoipSetCallForward4" onclick="WebVoipSetCallForward(3)" value="取消遇忙前传">
+			<br>
+			<input type="button" id="WebVoipSetCallForward5" onclick="WebVoipSetCallForward(4)" value="设置无应答前传">
+			<input type="button" id="WebVoipSetCallForward6" onclick="WebVoipSetCallForward(5)" value="取消无应答前传">
+			<input type="button" id="WebVoipSetCallForward7" onclick="WebVoipSetCallForward(6)" value="设置离线前传">
+			<input type="button" id="WebVoipSetCallForward8" onclick="WebVoipSetCallForward(7)" value="取消离线前传">
+			<br>
+			<input type="button" id="WebVoipSetCallDND1" onclick="WebVoipSetCallDND(0)" value="设置呼叫免打扰">
+			<input type="button" id="WebVoipSetCallDND2" onclick="WebVoipSetCallDND(1)" value="取消呼叫免打扰">
+			<input type="button" id="WebVoipSetCallACB1" onclick="WebVoipSetCallACB(0)" value="设置呼叫回呼">
+			<input type="button" id="WebVoipSetCallACB2" onclick="WebVoipSetCallACB(1)" value="取消呼叫回呼">
+		</div>
+		<div id="con_one_4">
+			<input type="button" id="WebVoipSetMediaMute0" onclick="WebVoipSetMediaMute(0,1)" value="设置麦克风静音">
+			<input type="button" id="WebVoipSetMediaMute1" onclick="WebVoipSetMediaMute(1,1)" value="设置扬声器静音">
+			<input type="button" id="WebVoipSetMediaMute2" onclick="WebVoipSetMediaMute(2,1)" value="设置视频静音">
+			<br>
+			<input type="button" id="WebVoipSetMediaMute3" onclick="WebVoipSetMediaMute(0,0)" value="取消麦克风静音">
+			<input type="button" id="WebVoipSetMediaMute4" onclick="WebVoipSetMediaMute(1,0)" value="取消扬声器静音">
+			<input type="button" id="WebVoipSetMediaMute5" onclick="WebVoipSetMediaMute(2,0)" value="取消视频静音">
+			<br>
+			<span id="getvolumemic" style="display:inline-block; width:120px;">mic音量(0-100)</span>
+			<input id="getmicvolume" type="text" value="">
+			<span id="getvolumespk" style="display:inline-block; width:120px;">spk音量(0-100)</span>
+			<input id="getspkvolume" type="text" value="">
+			<br>
+			<input type="button" id="WebVoipGetCurrMediaVolume0" onclick="WebVoipGetCurrMediaVolume(0)" value="获取麦克风音量">
+			<input type="button" id="WebVoipGetCurrMediaVolume1" onclick="WebVoipGetCurrMediaVolume(1)" value="获取扬声器音量">
+			<br>
+			<span id="setvolumemic" style="display:inline-block; width:120px;">mic音量(0-100)</span>
+			<input id="setmicvolume" type="text" value="88">
+			<span id="setvolumespk" style="display:inline-block; width:120px;">spk音量(0-100)</span>
+			<input id="setspkvolume" type="text" value="66">
+			<br>
+			<input type="button" id="WebVoipSetCurrMediaVolume0" onclick="WebVoipSetCurrMediaVolume0()" value="设置麦克风音量">
+			<input type="button" id="WebVoipSetCurrMediaVolume1" onclick="WebVoipSetCurrMediaVolume1()" value="设置扬声器音量">
+			<br>
+			<span id="micindex" style="display:inline-block; width:100px;">麦克风index</span>
+			<input id="setmicindex" type="text" value="">
+			<span id="spkindex" style="display:inline-block; width:100px;">扬声器index</span>
+			<input id="setspkindex" type="text" value="">
+			<span id="videoindex" style="display:inline-block; width:100px;">视频index</span>
+			<input id="setvideoindex" type="text" value="">
+			<br>
+			<input type="button" id="WebVoipSetMediaDevice0" onclick="WebVoipSetMediaDevice(0)" value="设置麦克风设备">
+			<input type="button" id="WebVoipSetMediaDevice1" onclick="WebVoipSetMediaDevice(1)" value="设置扬声器设备">
+			<input type="button" id="WebVoipSetMediaDevice2" onclick="WebVoipSetMediaDevice(2)" value="设置视频设备">
+			<br>
+			<span id="micdev" style="display:inline-block; width:100px;">麦克风设备</span>
+			<input id="getmicdev" type="text" value="" rows="5" cols="50" style="overflow-y:scroll; overflow-x:hidden;">
+			<span id="spkdev" style="display:inline-block; width:100px;">扬声器设备</span>
+			<input id="getspkdev" type="text" value="" rows="5" cols="50" style="overflow-y:scroll; overflow-x:hidden;">
+			<span id="videodev style="display:inline-block; width:100px;">视频设备</span>
+			<input id="getvideodev" type="text" value="" rows="5" cols="50" style="overflow-y:scroll; overflow-x:hidden;">
+			<br>
+			<input type="button" id="WebVoipGetMediaDevice0" onclick="WebVoipGetMediaDevice(0)" value="获取麦克风设备">
+			<input type="button" id="WebVoipGetMediaDevice1" onclick="WebVoipGetMediaDevice(1)" value="获取扬声器设备">
+			<input type="button" id="WebVoipGetMediaDevice2" onclick="WebVoipGetMediaDevice(2)" value="获取视频设备">
+		</div>
+		<div id="con_one_5">
+			<input type="button" id="WebVoipAudioRecord0" disabled="true" onclick="WebVoipAudioRecord(1)" value="启动通话录音">
+			<input type="button" id="WebVoipAudioRecord1" disabled="true" onclick="WebVoipAudioRecord(0)" value="停止通话录音">
+		</div>
+		<div id="con_one_6">
+			<span id="linknumtext" style="display:inline-block; width:100px;">联动号码</span>
+			<input id="linknum" type="text" value="386044">
+			<br>
+			<input type="button" id="WebVoipJointSetting" onclick="WebVoipJointSetting()" value="设置联动号码">
+			<input type="button" id="WebVoipPhoneJoint0" onclick="WebVoipPhoneJoint(1)" value="开启话机联动">
+			<input type="button" id="WebVoipPhoneJoint1" onclick="WebVoipPhoneJoint(0)" value="停止话机联动">
+			<input type="button" id="WebVoipJointSwitch0" onclick="WebVoipJointSwitch()" value="切换联动语音">
+		</div>
+		<div id="con_one_8">
+			<span id="errorinfocode" style="display:inline-block; width:100px;">错误码ID</span>
+			<input id="geterrorcode" type="text" value="134225921">
+			<span id="errorinfo" style="display:inline-block; width:100px;">错误码描述</span>
+			<input id="geterrordesc" type="text" value="">
+			<br>
+			<input type="button" id="WebVoipGetLastError" onclick="WebVoipGetLastError()" value="获取错误码信息">
+		</div>
+		<div id="code" >
+				<span id="demoCode">接口调用结果</span><br/>
+				<textarea id="result" rows="10" cols="100" style="overflow-y:scroll; overflow-x:hidden;">	
+				</textarea>
+		</div>
+		<div id="codeline" style="position: absolute; left: 0px; right: 0px; top:28px; bottom: 0px; overflow:auto;">
+		</div>
+	</div>
+</body>
+
+</html>
